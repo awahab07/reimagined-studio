@@ -20,6 +20,13 @@ PROMOTIONAL_TEXT = (
     "Reimagining play through fun, inclusive games that inspire learning, "
     "creativity, cognitive growth, and meaningful connection for every age."
 )
+PRODUCT_SLUGS = (
+    "bomb-duel-arena",
+    "mindful-adventures",
+    "imagine-world",
+    "curiosity-lab",
+    "tales-unfolded",
+)
 
 
 class SiteParser(HTMLParser):
@@ -147,9 +154,15 @@ def assert_html() -> None:
     if html.count("<summary>") != 5:
         raise AssertionError("Expected five accessible product summaries")
 
-    for number in range(1, 9):
+    for number in (1, 2, 3, 4, 5, 7, 8):
         if f"reimagined-studio-{number}.webp" not in html:
             raise AssertionError(f"Artwork {number} is not used by the public page")
+
+    for product_slug in PRODUCT_SLUGS:
+        if f"assets/products/{product_slug}.webp" not in html:
+            raise AssertionError(
+                f"Product artwork derived from artwork 6 is not used: {product_slug}"
+            )
 
     expected_text = (
         "For All Ages",
@@ -229,14 +242,7 @@ def assert_images() -> None:
         max_bytes=MAX_PLAY_STORE_BYTES,
     )
 
-    product_slugs = (
-        "bomb-duel-arena",
-        "mindful-adventures",
-        "imagine-world",
-        "curiosity-lab",
-        "tales-unfolded",
-    )
-    for slug in product_slugs:
+    for slug in PRODUCT_SLUGS:
         assert_image(
             f"assets/products/{slug}.webp",
             (640, 700),
