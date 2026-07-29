@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://awahab07.github.io/reimagined-studio/sitemap.xml
